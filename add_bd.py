@@ -33,8 +33,14 @@ def process_one_image(img_path):
 
     # 将原始图片粘贴到白色背景图上
     background.paste(img, (exterior, exterior))
-    draw = ImageDraw.Draw(background)
 
+
+    # add logo
+    logo_img = Image.open('logos/Olympus.png')
+    logo_height = infor_area * 0.8
+    logo_im=logo_img.resize((int(logo_img.width*logo_height/logo_img.height),int(logo_height)))
+    background.paste(logo_img,())
+    draw = ImageDraw.Draw(background)
     # add text
     font = ImageFont.truetype("arial.ttf", 80)
     text = "Olympus OM-30 Type.1985\n\nOM-System Zuiko.S 50mm F1,4"
@@ -42,9 +48,9 @@ def process_one_image(img_path):
     draw.text((x, y), text, fill=(0, 0, 0), font=font)
     text2 = "\nShot in Somewhere on the earth."
 
-    # add logo
-    logo_img=Image.open('logos/Olympus.png')
-    logo_height=infor_area*0.8
+
+
+
 
 
     if rota:
