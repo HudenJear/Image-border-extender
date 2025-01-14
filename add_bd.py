@@ -3,10 +3,20 @@ import  os,glob
 tgt='./imgdone'
 tgt_size=2400
 ratio=0.9
-border_size=int(0.03*tgt_size)
+border_size=int(0.015*tgt_size)
 border_color='black'
 exterior=int(0.05*tgt_size)
 infor_area=int(0.15*tgt_size)
+
+# text = "Olympus OM-30 Type.1985\n\nOM-System Zuiko.S 50mm F1,4"
+text = "Hasselblad 500CM Type.1991\n\nCarl Zeiss CF 60mm F3,5"
+# text = "Minolta Hi-Matic E Type.1982\n\nRokkor-QF 40mm F1,7"
+
+# logo_path='logos/Olympus.jpg'
+logo_path='logos/hassel.jpg'
+# logo_path='logos/Minolta.jpg'
+# logo_path='logos/mamiya.jpg'
+# logo_path='logos/mamiya2.jpg'
 
 def process_one_image(img_path):
 
@@ -36,14 +46,14 @@ def process_one_image(img_path):
 
 
     # add logo
-    logo_img = Image.open('logos/Olympus.png')
+    logo_img = Image.open(logo_path).convert('RGB')
     logo_height = infor_area * 0.8
-    logo_im=logo_img.resize((int(logo_img.width*logo_height/logo_img.height),int(logo_height)))
-    background.paste(logo_img,())
+    logo_img=logo_img.resize((int(logo_img.width*logo_height/logo_img.height),int(logo_height)))
+    background.paste(logo_img,(int(tgt_size+2*border_size+exterior-logo_img.width*logo_height/logo_img.height),int(new_height+2*border_size+2*exterior)))
     draw = ImageDraw.Draw(background)
     # add text
     font = ImageFont.truetype("arial.ttf", 80)
-    text = "Olympus OM-30 Type.1985\n\nOM-System Zuiko.S 50mm F1,4"
+
     x, y = exterior, 2 * exterior + new_height + 2*border_size
     draw.text((x, y), text, fill=(0, 0, 0), font=font)
     text2 = "\nShot in Somewhere on the earth."
