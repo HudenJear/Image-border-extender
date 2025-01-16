@@ -1,5 +1,8 @@
 from PIL import Image,ImageDraw,ImageFont,ImageOps
 import  os,glob
+from color_extract import  extract_main_colors
+import numpy as np
+
 src='./imgtoprocess'
 tgt='./imgdone'
 tgt_size=2400
@@ -8,6 +11,7 @@ border_size=int(0.015*tgt_size)
 border_color='black'
 exterior=int(0.05*tgt_size)
 infor_area=int(0.15*tgt_size)
+font_size=int(tgt_size*0.03)
 
 text_dict={
     'hassel_CF60':["Hasselblad 500CM Type.1990s\n\nCarl Zeiss CF 60mm F3,5",'logos/hassel.jpg'],
@@ -53,8 +57,8 @@ def rotate_image_90_no_crop(image_data,reverse=False):
 
 def process_one_image(img_path,text,logo_file):
 
-    img = Image.open(img_path)
-    print(img.height,img.width)
+    img = Image.open(img_path).convert('RGB')
+    # print(img.height,img.width)
 
     # 计算要将原始图片粘贴到白色背景图上的位置,rotate or not
     rota=True if img.width < img.height * 0.95 else False
@@ -88,23 +92,44 @@ def process_one_image(img_path,text,logo_file):
     logo_img=logo_img.resize((int(logo_img.width*logo_height/logo_img.height),int(logo_height)))
     background.paste(logo_img,(int(tgt_size+2*border_size+exterior-logo_img.width*logo_height/logo_img.height),int(new_height+2*border_size+2*exterior)))
     draw = ImageDraw.Draw(background)
-    # add text
-    font = ImageFont.truetype("arial.ttf", 80)
+    # add text 1 the camera
+    font = ImageFont.truetype("arial.ttf", font_size)
+    posi = (exterior, 2 * exterior + new_height + 2*border_size)
+    text_1=text.split('\n\n')[0]
+    draw.text(posi, text_1, fill=(0, 0, 0), font=font)
+    # mkae it bold
+    bold_offset = 1
+    for offset in [(0, 0), (bold_offset, 0), (0, bold_offset), (bold_offset, bold_offset)]:
+        draw.text((posi[0] + offset[0], posi[1] + offset[1]), text_1, font=font, fill=(0, 0, 0))
 
-    x, y = exterior, 2 * exterior + new_height + 2*border_size
-    draw.text((x, y), text, fill=(0, 0, 0), font=font)
-    text2 = "\nShot in Somewhere on the earth."
+    # add text 1 the lens
+    font = ImageFont.truetype("arial.ttf", int(font_size*0.9))
+    posi = (exterior, 2 * exterior + new_height + 2 * border_size+1.8*font_size)
+    text_2 = text.split('\n\n')[1]
+    draw.text(posi, text_2, fill=(0, 0, 0), font=font)
+    # text2 = "\nShot in Somewhere on the earth."
 
+    # add main_color
+    main_c=extract_main_colors(img,num_colors=4)
+    color_image = np.zeros((int(0.8* font_size), int(15*font_size), 3), dtype=int)
 
+    block_width = color_image.shape[1] // len(main_c)
 
+    for i, color in enumerate(main_c):
+        color_image[:, i * block_width:(i + 1) * block_width] = color
+    color_pad=Image.fromarray(color_image.astype('uint8'))
+    posi_mc=(exterior, int(2 * exterior + new_height + 2 * border_size+3.4*font_size))
+    background.paste(color_pad,posi_mc)
 
+    # rotate back and save
 
     if rota:
         background=rotate_image_90_no_crop(background,reverse=False)
     dir_p=os.path.split(os.path.split(img_path)[0])[1]
     sav_path=os.path.join(tgt, dir_p+'_'+os.path.splitext(os.path.split(img_path)[1])[0] + f".jpg")
     # 保存最终结果os.path.join(tgt, os.path.splitext(os.path.split(img_path)[1])[0] + f".jpg")
-    sav=background.save(sav_path)
+
+    return background.save(sav_path)
 
 
 if __name__=='__main__':
