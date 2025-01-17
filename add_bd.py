@@ -50,11 +50,14 @@ logo_dict={
 }
 
 def initializing_directories():
+    if not os.path.exists(tgt):
+        os.mkdir(tgt)
+    if not os.path.exists(src):
+        os.mkdir(src)
     for dir_name in list(text_dict.keys()):
         if not os.path.exists(os.path.join(src,dir_name)):
             os.mkdir(os.path.join(src,dir_name))
-    if not os.path.exists(tgt):
-        os.mkdir(tgt)
+
 
 def rotate_image_90_no_crop(image_data,reverse=False):
     # 打开图像
