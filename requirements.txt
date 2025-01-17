@@ -1,2 +1,4 @@
-pillows >=11.1.0
+pillow >=11.1.0
 piexif
+numpy
+scikit-learn
