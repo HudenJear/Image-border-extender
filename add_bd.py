@@ -121,10 +121,13 @@ def process_one_image(img_path,text,logo_file):
                 F_value=exif_dict['Exif'][piexif.ExifIFD.FNumber]
                 # print(F_value)
                 ISO_value=exif_dict['Exif'][piexif.ExifIFD.ISOSpeedRatings]
+                ss_value=exif_dict['Exif'][piexif.ExifIFD.ExposureTime]
+                ss_text='S: '+str(ss_value[0])+"/"+str(ss_value[1])+'s' if ss_value[0]/ss_value[1] <1 else 'S: '+str(ss_value[0])+'s'
+
                 # print(str(exif_dict['Exif'][piexif.ExifIFD.LensModel]))
                 text=text+exif_dict['Exif'][piexif.ExifIFD.LensModel].decode('utf-8')
                 # camera_m=exif_data['Make']
-                suppli_line='Focal Length: '+str(int(focal_length[0]/focal_length[1]))+'mm    '+'Aperture: F'+str(F_value[0]/F_value[1]).replace('.',',')+'    '+'ISO/Din: '+str(ISO_value)
+                suppli_line='Focal: '+str(int(focal_length[0]/focal_length[1]))+'mm    '+'A: F'+str(F_value[0]/F_value[1]).replace('.',',')+'    '+'ISO: '+str(ISO_value)+'    '+ss_text
 
 
 
@@ -210,7 +213,7 @@ def process_one_image(img_path,text,logo_file):
     if rota:
         background=rotate_image_90_no_crop(background,reverse=False)
     dir_p=os.path.split(os.path.split(img_path)[0])[1]
-    sav_path=os.path.join(tgt, dir_p+'_'+os.path.splitext(os.path.split(img_path)[1])[0] + f".jpg")
+    sav_path=os.path.join(tgt, os.path.splitext(os.path.split(img_path)[1])[0] +'_'+dir_p+ f".jpg")
     # 保存最终结果os.path.join(tgt, os.path.splitext(os.path.split(img_path)[1])[0] + f".jpg")
 
     return background.save(sav_path)
