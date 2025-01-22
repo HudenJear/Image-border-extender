@@ -12,8 +12,8 @@ ratio=0.9
 border_size=int(0.01*tgt_size)
 border_color='black'
 exterior=int(0.03*tgt_size)
-infor_area=int(0.15*tgt_size)
-font_size=int(tgt_size*0.03)
+infor_area=int(0.12*tgt_size)
+font_size=int(infor_area*0.2)
 cc_name='Credit Name'
 
 
@@ -45,7 +45,12 @@ logo_dict={
     'mamiya_six': 'logos/mamiya.jpg',
     'minolta':'logos/Minolta.jpg',
     'SONY':'logos/Sony-Alpha-Logo.png',
-    'Panasonic': 'logos/Panasonic-Lumix-Logo.jpg'
+    'Panasonic': 'logos/Panasonic-Lumix-Logo.jpg',
+    'Canon': "logos/canon-r-logo.jpg",
+    'OLYMPUS IMAGING CORP.  ': "logos/Olympus-new.png",
+    'OLYMPUS CORPORATION': "logos/Olympus-new.png",
+    'NIKON CORPORATION': "logos/Olympus-new.png",
+    'FUJIFILM': "logos/Olympus-new.png",
 
 }
 
@@ -127,7 +132,8 @@ def process_one_image(img_path,text,logo_file):
                 # print(str(exif_dict['Exif'][piexif.ExifIFD.LensModel]))
                 text=text+exif_dict['Exif'][piexif.ExifIFD.LensModel].decode('utf-8')
                 # camera_m=exif_data['Make']
-                suppli_line='Focal: '+str(int(focal_length[0]/focal_length[1]))+'mm    '+'A: F'+str(F_value[0]/F_value[1]).replace('.',',')+'    '+'ISO: '+str(ISO_value)+'    '+ss_text
+                # suppli_line='Focal: '+str(int(focal_length[0]/focal_length[1]))+'mm    '+'A: F'+str(F_value[0]/F_value[1]).replace('.',',')+'    '+'ISO: '+str(ISO_value)+'    '+ss_text
+                suppli_line='Focal: '+str(int(focal_length[0]/focal_length[1]))+'mm    '+'A: F'+str(F_value[0]/F_value[1])+'    '+'ISO: '+str(ISO_value)+'    '+ss_text
 
 
 
@@ -196,7 +202,7 @@ def process_one_image(img_path,text,logo_file):
     # add main_color
     main_c=extract_main_colors(img,num_colors=4)
     color_image = np.zeros((int(0.8* font_size), int(15*font_size), 3), dtype=int)
-    block_width = color_image.shape[1] // len(main_c)
+    block_width = color_image.shape[1] // len(main_c) +1
     for i, color in enumerate(main_c):
         color_image[:, i * block_width:(i + 1) * block_width] = color
     color_pad=Image.fromarray(color_image.astype('uint8'))
