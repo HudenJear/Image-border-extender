@@ -14,7 +14,7 @@ border_color='black'
 exterior=int(0.03*tgt_size)
 infor_area=int(0.15*tgt_size)
 font_size=int(tgt_size*0.03)
-cc_name='Credit Name'
+
 
 
 # suppli_info="Kodak Vision3 5219 500T 120"
