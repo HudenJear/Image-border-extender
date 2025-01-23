@@ -5,8 +5,8 @@ import  os,glob
 from color_extract import  extract_main_colors
 import numpy as np
 
-src='./imgtoprocess'
-tgt='./imgdone'
+src='E:\gitclones\imagebd_data数据备份\imgtoprocess'
+tgt='E:\gitclones\imagebd_data数据备份\imgdone'
 tgt_size=2400
 ratio=0.9
 border_size=int(0.01*tgt_size)
@@ -20,8 +20,11 @@ cc_name='Credit Name'
 # suppli_info="Kodak Vision3 5219 500T 120"
 # suppli_info="Kodak Vision3 5207 250T 120"
 # suppli_info="Kodak EktarChrome 5294 100D 135"
-suppli_info="FUJICHROME Velvia 100 Daylight 120"
+# suppli_info="FUJICHROME Velvia 100 Daylight 120"
 # suppli_info="FUJICHROME Provia 100f Daylight 120"
+suppli_info="Lucky SHD400 B/W 120"
+# suppli_info="FUJICHROME Provia 100f Daylight 120"
+#
 # suppli_info=None
 
 
@@ -37,7 +40,7 @@ text_dict={
 
 }
 logo_dict={
-'hassel_CF60':'logos/hassel.jpg',
+    'hassel_CF60':'logos/hassel.jpg',
     'hassel_CF150': 'logos/hassel.jpg',
     'olym_50':'logos/Olympus.jpg',
     'olym_135': 'logos/Olympus.jpg',
@@ -46,11 +49,14 @@ logo_dict={
     'minolta':'logos/Minolta.jpg',
     'SONY':'logos/Sony-Alpha-Logo.png',
     'Panasonic': 'logos/Panasonic-Lumix-Logo.jpg',
-    'Canon': "logos/canon-r-logo.jpg",
+    'Canon_R': "logos/canon-r-logo.jpg",
+    'Canon': "logos/canon.jpg",
     'OLYMPUS IMAGING CORP.  ': "logos/Olympus-new.png",
     'OLYMPUS CORPORATION': "logos/Olympus-new.png",
-    'NIKON CORPORATION': "logos/Olympus-new.png",
+    'NIKON CORPORATION': "logos/nikon.png",
+    'NIKON CORPORATION_Z': "logos/nikon-z.png",
     'FUJIFILM': "logos/Olympus-new.png",
+
 
 }
 
