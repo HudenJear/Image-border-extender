@@ -5,8 +5,8 @@ import  os,glob
 from color_extract import  extract_main_colors
 import numpy as np
 
-src='E:\gitclones\imagebd_data数据备份\imgtoprocess'
-tgt='E:\gitclones\imagebd_data数据备份\imgdone'
+src='D:\gitclone\imagebd_data数据备份\imgtoprocess'
+tgt='D:\gitclone\imagebd_data数据备份\imgdone'
 tgt_size=2400
 ratio=0.9
 border_size=int(0.01*tgt_size)
@@ -17,12 +17,13 @@ font_size=int(infor_area*0.2)
 cc_name='Credit Name'
 
 
-# suppli_info="Kodak Vision3 5219 500T 120"
-# suppli_info="Kodak Vision3 5207 250T 120"
+suppli_info="Kodak Vision3 500T Color Negative 5219 120"
+suppli_info="Kodak Vision3 500T Color Negative 5219 135"
+# suppli_info="Kodak Vision3 250T Color Negative 5207 120"
 # suppli_info="Kodak EktarChrome 5294 100D 135"
 # suppli_info="FUJICHROME Velvia 100 Daylight 120"
 # suppli_info="FUJICHROME Provia 100f Daylight 120"
-suppli_info="Lucky SHD400 B/W 120"
+# suppli_info="Lucky SHD400 B/W 120"
 # suppli_info="FUJICHROME Provia 100f Daylight 120"
 #
 # suppli_info=None
