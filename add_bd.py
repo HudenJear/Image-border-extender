@@ -144,10 +144,6 @@ def process_one_image(img_path,text,logo_file):
 
 
 
-                # print(text)
-                # print(logo_file)
-                # print(suppli_line)
-
             except:
                 print(f"Exif detected broken for one image in the auto detect dictionary:{img_path}")
 
